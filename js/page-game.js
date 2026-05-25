@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
   _nextQuestion();
 
   // ボタン
-  document.querySelectorAll('.num-btn').forEach(btn => {
+  document.querySelectorAll('.num-btn[data-num]').forEach(btn => {
     btn.addEventListener('click', () => { getAudioCtx(); _inputDigit(btn.dataset.num); });
   });
   document.getElementById('btn-num-clear').addEventListener('click', _inputClear);
