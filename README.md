@@ -71,6 +71,24 @@
 - **正解**：にっこりした表情に変化
 - **不正解**：残念な表情に変化
 
+#### 使用キャラクター（全5種）
+
+| キャラクター | フォルダ名 |
+|------------|-----------|
+| カービィ | kirby |
+| メタナイト | metaknight |
+| ワドルディ | waddledee |
+| デデデ大王 | dedede |
+| エフィリン | elfilin |
+
+各キャラクターに3種類の画像を用意する：
+
+| ファイル名 | 使用場面 |
+|-----------|---------|
+| normal.png | 通常時（問題表示中） |
+| happy.png | 正解時 |
+| sad.png | 不正解時 |
+
 ### 7. ランキング
 
 - 各ランキングはトップ10を記録・表示
@@ -117,9 +135,26 @@ anzan-game/
 │   └── settings.js   # 設定管理
 ├── images/
 │   └── chara/
-│       ├── normal.png  # 通常表情
-│       ├── happy.png   # 正解時
-│       └── sad.png     # 不正解時
+│       ├── kirby/
+│       │   ├── normal.png
+│       │   ├── happy.png
+│       │   └── sad.png
+│       ├── metaknight/
+│       │   ├── normal.png
+│       │   ├── happy.png
+│       │   └── sad.png
+│       ├── waddledee/
+│       │   ├── normal.png
+│       │   ├── happy.png
+│       │   └── sad.png
+│       ├── dedede/
+│       │   ├── normal.png
+│       │   ├── happy.png
+│       │   └── sad.png
+│       └── elfilin/
+│           ├── normal.png
+│           ├── happy.png
+│           └── sad.png
 ├── sounds/           # 効果音（将来対応）
 └── README.md
 ```
