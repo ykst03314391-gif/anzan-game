@@ -212,17 +212,18 @@ function _checkRewards(score) {
   const updated = addCorrectCount(user.id, _gs.correct);
 
   // ミッション
-  const ms = addMissionCorrect(user.id, _gs.correct);
-  if (ms.achieved && !ms._notified) {
-    ms._notified = true;
-    saveMission(user.id, ms);
+  const newlyAchieved = updateMissionsAfterGame(user.id, {
+    calcTypeId: config.calcTypeId,
+    mode: config.mode,
+    totalCorrect: updated.totalCorrect,
+  });
+  if (newlyAchieved.length > 0) {
     playSe('mission');
-    _showToast('📅 ミッションクリア！');
+    newlyAchieved.forEach(id => {
+      const m = MISSIONS.find(x => x.id === id);
+      if (m) _showToast(`📅 ミッション達成：${m.label}`);
+    });
     _checkAndGrantBadge('mission_clear');
-    const ct = getCalcType(config.calcTypeId);
-    const ml = config.mode === 'count'
-      ? `${config.countOrTime}もんチャレンジ` : `${config.countOrTime/60}ふんチャレンジ`;
-    recordMissionHistory(user.id, ml, ct.label);
   }
 
   // キャラアンロック

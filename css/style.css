@@ -397,32 +397,37 @@ select {
 select:focus { outline: none; border-color: var(--pink); }
 
 /* ============================================================
-   毎日ミッション画面
+   ミッション画面
 ============================================================ */
+.mission-item {
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+}
+.mission-item:last-child { border-bottom: none; }
+.mission-label {
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.mission-item.achieved .mission-label { color: var(--green); }
 .mission-progress-wrap {
   background: #eee;
   border-radius: 50px;
-  height: 28px;
+  height: 16px;
   overflow: hidden;
-  margin: 12px 0 6px;
+  margin: 6px 0 4px;
 }
-#mission-progress-bar {
+.mission-progress-bar {
   height: 100%;
   background: linear-gradient(90deg, var(--pink), var(--yellow));
   border-radius: 50px;
   transition: width 0.5s ease;
 }
-#mission-progress-text {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-#mission-achieved {
-  text-align: center;
-  color: var(--green);
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 10px;
+.mission-item.achieved .mission-progress-bar { background: var(--green); }
+.mission-progress-text {
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: right;
 }
 
 /* ============================================================
