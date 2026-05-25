@@ -223,8 +223,6 @@ function initTopScreen() {
   document.getElementById('btn-go-mission').addEventListener('click', () => { initMissionScreen(); showScreen('mission'); });
   document.getElementById('btn-go-collection').addEventListener('click', () => { initCollectionScreen(); showScreen('collection'); });
   document.getElementById('btn-go-settings').addEventListener('click', () => { initSettingsScreen(); showScreen('settings'); });
-
-  playBgm('main');
 }
 
 function _canStart() {
@@ -766,6 +764,7 @@ function initSettingsScreen() {
   document.getElementById('btn-settings-back').addEventListener('click', () => {
     initTopScreen();
     showScreen('top');
+    playBgm('main');
   });
 }
 
@@ -892,11 +891,19 @@ function initResultButtons() {
 document.addEventListener('DOMContentLoaded', () => {
   initGameButtons();
   initResultButtons();
-  initTopScreen();
 
-  // ユーザーがいなければ設定画面へ
-  if (!loadUsers().length) {
-    initSettingsScreen();
-    showScreen('settings');
-  }
+  // スタートアップオーバーレイ：ユーザー操作後にAudioContextを初期化
+  const overlay = document.getElementById('startup-overlay');
+  overlay.addEventListener('click', () => {
+    _getCtx(); // AudioContext をユーザー操作タイミングで作成
+    overlay.style.display = 'none';
+
+    initTopScreen();
+    playBgm('main');
+
+    if (!loadUsers().length) {
+      initSettingsScreen();
+      showScreen('settings');
+    }
+  }, { once: true });
 });
