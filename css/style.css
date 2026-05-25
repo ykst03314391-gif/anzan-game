@@ -1,0 +1,539 @@
+/* ===== リセット & 基本 ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pink:     #FF6EB4;
+  --pink-d:   #e05090;
+  --blue:     #5BBFF5;
+  --blue-d:   #3a9fd4;
+  --yellow:   #FFD700;
+  --green:    #6BCB77;
+  --red:      #FF6B6B;
+  --bg:       #FFF0F8;
+  --card:     #FFFFFF;
+  --text:     #333333;
+  --muted:    #888888;
+  --radius:   18px;
+  --shadow:   0 4px 20px rgba(255,110,180,0.18);
+  --font:     'Hiragino Maru Gothic ProN', 'BIZ UDPGothic', 'Meiryo', sans-serif;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 17px;
+  overscroll-behavior: none;
+}
+
+/* ===== 画面切替 ===== */
+.screen        { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+.hidden        { display: none !important; }
+
+/* ===== ボタン共通 ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  user-select: none;
+}
+.btn:active { transform: scale(0.95); }
+.btn:disabled { opacity: 0.4; pointer-events: none; }
+
+.btn-primary   { background: var(--pink);   color: #fff; box-shadow: 0 4px 0 var(--pink-d); }
+.btn-secondary { background: var(--blue);   color: #fff; box-shadow: 0 4px 0 var(--blue-d); }
+.btn-success   { background: var(--green);  color: #fff; box-shadow: 0 4px 0 #4aab55; }
+.btn-danger    { background: var(--red);    color: #fff; box-shadow: 0 4px 0 #d44; }
+.btn-ghost     { background: #eee;          color: var(--text); box-shadow: 0 4px 0 #ccc; }
+.btn-sm        { padding: 6px 12px; font-size: 0.85rem; }
+.btn.active    { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+/* ===== カード ===== */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card h2 {
+  font-size: 1.05rem;
+  color: var(--pink);
+  margin-bottom: 12px;
+}
+
+/* ===== スクロール可能なコンテナ ===== */
+.scroll-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+}
+
+/* ============================================================
+   トップ画面
+============================================================ */
+#screen-top {
+  padding-bottom: 40px;
+}
+
+.top-header {
+  background: linear-gradient(135deg, var(--pink), #ff9fcf);
+  padding: 20px 16px 16px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255,110,180,0.3);
+}
+.top-header h1 { font-size: 1.6rem; letter-spacing: 0.05em; }
+.top-header p  { font-size: 0.85rem; opacity: 0.85; margin-top: 4px; }
+
+#top-user-badge {
+  display: inline-block;
+  margin-top: 10px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50px;
+  padding: 4px 16px;
+  font-size: 0.9rem;
+}
+
+.top-nav {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.top-nav .btn { font-size: 0.85rem; padding: 8px 14px; }
+
+/* 計算タブ */
+.calc-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.calc-tab {
+  padding: 8px 14px;
+  border: 2px solid var(--pink);
+  border-radius: 50px;
+  background: #fff;
+  color: var(--pink);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.calc-tab.active {
+  background: var(--pink);
+  color: #fff;
+}
+
+/* 計算ボタングリッド */
+.calc-btn-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.calc-btn {
+  padding: 10px 14px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.calc-btn.active {
+  border-color: var(--pink);
+  background: #ffe0f0;
+  color: var(--pink);
+  font-weight: bold;
+}
+
+/* モード・問題数ボタン */
+.mode-btn, .count-btn, .time-btn {
+  padding: 10px 20px;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  background: #fff;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: bold;
+}
+.mode-btn.active, .count-btn.active, .time-btn.active {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #fff;
+}
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#btn-start {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.3rem;
+  border-radius: var(--radius);
+  margin-top: 8px;
+}
+
+/* ============================================================
+   ゲーム画面
+============================================================ */
+#screen-game {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fff5fc 0%, var(--bg) 100%);
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--pink);
+  color: #fff;
+  gap: 10px;
+}
+.game-header .label { font-size: 0.85rem; opacity: 0.85; }
+.game-header .value { font-size: 1.1rem; font-weight: bold; }
+#game-timer { font-size: 1.4rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+
+.game-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+}
+
+/* キャラクター */
+.chara-area {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#game-chara-img { width: 100%; height: 100%; object-fit: contain; }
+#game-chara-fallback {
+  font-size: 72px;
+  line-height: 1;
+  display: none;
+}
+
+/* 問題 */
+#game-question {
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+/* 答え入力エリア */
+.answer-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.answer-box {
+  min-width: 100px;
+  padding: 10px 20px;
+  background: #fff;
+  border: 3px solid #ddd;
+  border-radius: 14px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  min-height: 58px;
+  transition: border-color 0.15s;
+}
+.answer-box.input-active { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,110,180,0.2); }
+.answer-label { font-size: 0.85rem; color: var(--muted); text-align: center; }
+.answer-group { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+/* フィードバック */
+.feedback {
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 50px;
+  text-align: center;
+}
+.feedback.correct { background: #e8f8e8; color: var(--green); }
+.feedback.wrong   { background: #fde8e8; color: var(--red); }
+
+/* テンキー */
+#game-numpad {
+  width: 100%;
+  max-width: 300px;
+}
+.numpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.num-btn {
+  aspect-ratio: 1;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 14px;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: all 0.1s;
+  box-shadow: 0 3px 0 #ccc;
+}
+.num-btn:active { transform: translateY(2px); box-shadow: none; }
+#btn-num-clear  { background: #fde8e8; border-color: var(--red); color: var(--red); }
+#btn-num-ok     { background: var(--green); border-color: #4aab55; color: #fff; box-shadow: 0 3px 0 #4aab55; }
+#btn-switch-field { width: 100%; margin-top: 6px; font-size: 0.9rem; }
+
+#game-kb-hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 8px;
+}
+
+/* ============================================================
+   結果画面
+============================================================ */
+#screen-result { padding-bottom: 40px; }
+
+.result-header {
+  background: linear-gradient(135deg, var(--blue), #9fd8ff);
+  padding: 24px 16px;
+  text-align: center;
+  color: #fff;
+}
+.result-header h2 { font-size: 1.4rem; }
+.result-score { margin-top: 12px; }
+.result-score .label { font-size: 0.9rem; opacity: 0.85; }
+.result-score .value { font-size: 3rem; font-weight: bold; }
+.result-correct { font-size: 0.95rem; opacity: 0.9; margin-top: 4px; }
+
+.rank-in-msg { color: var(--pink); font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
+.rank-registered { color: var(--green); font-weight: bold; }
+.rank-input-row { display: flex; gap: 8px; }
+.rank-input-row input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 1rem;
+}
+.rank-input-row input:focus { outline: none; border-color: var(--pink); }
+
+.result-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.result-btn-row .btn { flex: 1; min-width: 100px; }
+
+/* ============================================================
+   ランキング画面
+============================================================ */
+#screen-ranking { padding-bottom: 40px; }
+.screen-header {
+  background: linear-gradient(135deg, var(--yellow), #ffecaa);
+  padding: 20px 16px;
+  text-align: center;
+}
+.screen-header h2 { font-size: 1.3rem; }
+
+.ranking-table { width: 100%; border-collapse: collapse; }
+.ranking-table th { background: var(--pink); color: #fff; padding: 10px; text-align: center; }
+.ranking-table td { padding: 10px; text-align: center; border-bottom: 1px solid #eee; }
+.ranking-table tr:nth-child(1) td { color: #c9a000; font-weight: bold; }
+.ranking-table tr:nth-child(2) td { color: var(--muted); font-weight: bold; }
+.ranking-table tr:nth-child(3) td { color: #a06030; font-weight: bold; }
+
+select {
+  padding: 10px 14px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  width: 100%;
+  margin-bottom: 12px;
+  background: #fff;
+}
+select:focus { outline: none; border-color: var(--pink); }
+
+/* ============================================================
+   毎日ミッション画面
+============================================================ */
+.mission-progress-wrap {
+  background: #eee;
+  border-radius: 50px;
+  height: 28px;
+  overflow: hidden;
+  margin: 12px 0 6px;
+}
+#mission-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--yellow));
+  border-radius: 50px;
+  transition: width 0.5s ease;
+}
+#mission-progress-text {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+#mission-achieved {
+  text-align: center;
+  color: var(--green);
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* ============================================================
+   コレクション画面
+============================================================ */
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+}
+.badge-item {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 14px;
+  padding: 12px 8px;
+  text-align: center;
+}
+.badge-item.earned { border-color: var(--yellow); background: #fffde8; }
+.badge-item.locked { opacity: 0.5; }
+.badge-icon   { font-size: 2rem; }
+.badge-label  { font-size: 0.78rem; font-weight: bold; margin-top: 4px; }
+.badge-desc   { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+
+.illust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+.illust-item {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+}
+.illust-item.locked { opacity: 0.5; }
+.illust-item img    { width: 100%; border-radius: 10px; }
+.illust-placeholder { font-size: 3rem; padding: 16px 0; }
+.illust-label       { font-size: 0.78rem; margin-top: 6px; font-weight: bold; }
+
+/* ============================================================
+   設定画面
+============================================================ */
+#screen-settings { padding-bottom: 40px; }
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  flex-wrap: wrap;
+}
+.user-item.current { background: #fff8fe; }
+.user-chara   { font-size: 1.6rem; }
+.user-name    { font-weight: bold; flex: 1; min-width: 60px; }
+.user-correct { font-size: 0.8rem; color: var(--muted); }
+.user-actions { display: flex; gap: 6px; }
+.empty-msg    { color: var(--muted); text-align: center; padding: 16px; }
+
+/* ユーザーフォームモーダル */
+#user-form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.user-form-box {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+}
+.user-form-box h3 { font-size: 1.2rem; margin-bottom: 16px; color: var(--pink); }
+.form-field { margin-bottom: 14px; }
+.form-field label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 4px; color: var(--muted); }
+.form-field input, .form-field select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 1rem;
+}
+.form-field input:focus, .form-field select:focus { outline: none; border-color: var(--pink); }
+.form-btn-row { display: flex; gap: 10px; margin-top: 16px; }
+.form-btn-row .btn { flex: 1; }
+
+/* ============================================================
+   リワードトースト
+============================================================ */
+#reward-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #333;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  z-index: 200;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+#reward-toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ============================================================
+   ミッション履歴テーブル
+============================================================ */
+.history-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.history-table th { background: var(--pink); color: #fff; padding: 8px; text-align: center; }
+.history-table td { padding: 8px; border-bottom: 1px solid #eee; text-align: center; }
+
+/* ============================================================
+   レスポンシブ
+============================================================ */
+@media (max-width: 400px) {
+  #game-question  { font-size: 1.7rem; }
+  .answer-box     { font-size: 1.4rem; min-width: 80px; }
+  .num-btn        { font-size: 1.2rem; }
+  .top-header h1  { font-size: 1.3rem; }
+}
