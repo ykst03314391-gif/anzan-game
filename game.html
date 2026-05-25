@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="算数ゲーム">
+  <title>算数暗算ゲーム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="reward-toast"></div>
+
+<!-- ゲーム中 -->
+<div id="section-game">
+  <div class="game-header">
+    <div>
+      <div class="label">計算</div>
+      <div class="value" id="game-calc-label">—</div>
+    </div>
+    <div id="game-timer">00:00</div>
+    <div>
+      <div class="label" id="game-mode-label">—</div>
+      <div class="value" id="game-progress">—</div>
+    </div>
+  </div>
+
+  <div class="game-body">
+    <div class="chara-area">
+      <img id="game-chara-img" src="" alt="">
+      <div id="game-chara-fallback">⭐</div>
+    </div>
+
+    <div id="game-question" style="min-height:2.5em; display:flex; align-items:center;"></div>
+
+    <div class="answer-area">
+      <div class="answer-group">
+        <div class="answer-label">こたえ</div>
+        <div id="game-answer-display" class="answer-box input-active">　</div>
+      </div>
+      <div id="game-remainder-row" class="answer-group hidden">
+        <div class="answer-label">あまり</div>
+        <div id="game-remainder-display" class="answer-box">　</div>
+      </div>
+    </div>
+
+    <div id="game-feedback" class="feedback hidden"></div>
+
+    <div id="game-numpad">
+      <div class="numpad-grid">
+        <button class="num-btn" data-num="7">7</button>
+        <button class="num-btn" data-num="8">8</button>
+        <button class="num-btn" data-num="9">9</button>
+        <button class="num-btn" data-num="4">4</button>
+        <button class="num-btn" data-num="5">5</button>
+        <button class="num-btn" data-num="6">6</button>
+        <button class="num-btn" data-num="1">1</button>
+        <button class="num-btn" data-num="2">2</button>
+        <button class="num-btn" data-num="3">3</button>
+        <button id="btn-num-clear" class="num-btn">C</button>
+        <button class="num-btn" data-num="0">0</button>
+        <button id="btn-num-ok" class="num-btn">OK</button>
+      </div>
+      <button id="btn-switch-field" class="btn btn-ghost hidden">こたえ ↔ あまり</button>
+    </div>
+
+    <div id="game-kb-hint" class="hidden">
+      数字キー で入力 ／ Enter で決定 ／ Tab で切替（あまりあり時）
+    </div>
+
+    <button id="btn-game-quit" class="btn btn-ghost" style="margin-top:8px;">やめる</button>
+  </div>
+</div>
+
+<!-- 結果 -->
+<div id="section-result" class="hidden">
+  <div class="result-header">
+    <h2>🎉 けっか</h2>
+    <div id="result-calc-label" style="font-size:0.9rem; opacity:0.8; margin-top:4px;"></div>
+    <div class="result-score">
+      <div class="label" id="result-score-label"></div>
+      <div class="value" id="result-score-value"></div>
+    </div>
+    <div class="result-correct" id="result-correct-count"></div>
+  </div>
+
+  <div class="scroll-container">
+    <div class="card" id="result-rank-section"></div>
+
+    <div class="result-btn-row">
+      <button id="btn-result-top"     class="btn btn-ghost">🏠 トップへ</button>
+      <button id="btn-result-retry"   class="btn btn-primary">🔄 もう一度</button>
+      <button id="btn-result-ranking" class="btn btn-secondary">🏆 ランキング</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/rewards.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/ranking.js"></script>
+<script src="js/game.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/page-game.js"></script>
+
+</body>
+</html>

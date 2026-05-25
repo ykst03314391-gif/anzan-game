@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="算数ゲーム">
+  <title>設定｜算数暗算ゲーム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ユーザーフォームモーダル -->
+<div id="user-form-modal" class="hidden">
+  <div class="user-form-box">
+    <h3 id="user-form-title">ユーザー登録</h3>
+    <div class="form-field">
+      <label>なまえ</label>
+      <input id="user-name-input" type="text" placeholder="なまえをいれてね" maxlength="10">
+    </div>
+    <div class="form-field">
+      <label>キャラクター</label>
+      <select id="user-chara-select"></select>
+    </div>
+    <div class="form-btn-row">
+      <button id="btn-user-form-cancel" class="btn btn-ghost">キャンセル</button>
+      <button id="btn-user-form-save"   class="btn btn-primary">保存</button>
+    </div>
+  </div>
+</div>
+
+<div id="screen-settings">
+  <div class="screen-header" style="background:linear-gradient(135deg,#667eea,#764ba2); color:#fff;">
+    <h2>⚙ 設定</h2>
+  </div>
+
+  <div class="scroll-container">
+
+    <div class="card">
+      <h2>👤 ユーザー</h2>
+      <div id="user-list"></div>
+      <button id="btn-add-user" class="btn btn-primary" style="margin-top:14px; width:100%;">＋ ユーザーを追加</button>
+    </div>
+
+    <div class="card">
+      <h2>⌨ 入力方法</h2>
+      <div class="btn-row">
+        <button class="input-mode-btn btn btn-ghost" data-mode="touch">タッチボタン</button>
+        <button class="input-mode-btn btn btn-ghost" data-mode="keyboard">キーボード</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔧 その他</h2>
+      <button id="btn-reset-ranking" class="btn btn-danger">ランキングをリセット</button>
+    </div>
+
+    <button id="btn-settings-back" class="btn btn-ghost">← もどる</button>
+  </div>
+</div>
+
+<script src="js/rewards.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/ranking.js"></script>
+<script src="js/game.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/page-settings.js"></script>
+
+</body>
+</html>

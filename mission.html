@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="算数ゲーム">
+  <title>毎日ミッション｜算数暗算ゲーム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="screen-header" style="background:linear-gradient(135deg,#a8e063,#56ab2f); color:#fff;">
+  <h2>📅 毎日ミッション</h2>
+</div>
+
+<div class="scroll-container">
+  <div class="card">
+    <h2>今日のミッション</h2>
+    <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">何でもいいから <strong>10もん</strong> 正解しよう！</p>
+    <div class="mission-progress-wrap">
+      <div id="mission-progress-bar" style="width:0%"></div>
+    </div>
+    <div id="mission-progress-text">0 / 10 もん</div>
+    <div id="mission-achieved" class="hidden">✅ クリア！おめでとう！</div>
+  </div>
+
+  <div class="card">
+    <h2>クリア履歴</h2>
+    <table class="history-table">
+      <thead><tr><th>日付</th><th>モード</th><th>計算</th></tr></thead>
+      <tbody id="mission-history-body">
+        <tr><td colspan="3">まだ記録がありません</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button id="btn-mission-back" class="btn btn-ghost">← もどる</button>
+</div>
+
+<script src="js/rewards.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/ranking.js"></script>
+<script src="js/game.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/page-mission.js"></script>
+
+</body>
+</html>

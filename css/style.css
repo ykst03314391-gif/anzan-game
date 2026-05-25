@@ -46,10 +46,8 @@ html, body {
   50%       { opacity: 1; }
 }
 
-/* ===== 画面切替 ===== */
-.screen        { display: none; min-height: 100vh; }
-.screen.active { display: block; }
-.hidden        { display: none !important; }
+/* ===== ユーティリティ ===== */
+.hidden { display: none !important; }
 
 /* ===== ボタン共通 ===== */
 .btn {
@@ -214,7 +212,7 @@ html, body {
 /* ============================================================
    ゲーム画面
 ============================================================ */
-#screen-game {
+#section-game {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -338,7 +336,7 @@ html, body {
 /* ============================================================
    結果画面
 ============================================================ */
-#screen-result { padding-bottom: 40px; }
+#section-result { padding-bottom: 40px; }
 
 .result-header {
   background: linear-gradient(135deg, var(--blue), #9fd8ff);

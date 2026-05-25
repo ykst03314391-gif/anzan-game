@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="算数ゲーム">
+  <title>ランキング｜算数暗算ゲーム</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="screen-ranking">
+  <div class="screen-header">
+    <h2>🏆 ランキング</h2>
+  </div>
+
+  <div class="scroll-container">
+    <div class="card">
+      <select id="ranking-calc-select"></select>
+
+      <div class="btn-row" style="margin-bottom:10px;">
+        <button class="rank-mode-btn btn btn-ghost active" data-mode="count">もんだいかず</button>
+        <button class="rank-mode-btn btn btn-ghost"        data-mode="time">せいげん時間</button>
+      </div>
+
+      <div id="rank-count-options" class="btn-row" style="margin-bottom:12px;">
+        <button class="rank-count-btn btn btn-ghost" data-value="10">10もん</button>
+        <button class="rank-count-btn btn btn-ghost" data-value="20">20もん</button>
+        <button class="rank-count-btn btn btn-ghost" data-value="30">30もん</button>
+      </div>
+      <div id="rank-time-options" class="btn-row hidden" style="margin-bottom:12px;">
+        <button class="rank-time-btn btn btn-ghost" data-value="1">1ふん</button>
+        <button class="rank-time-btn btn btn-ghost" data-value="3">3ふん</button>
+        <button class="rank-time-btn btn btn-ghost" data-value="5">5ふん</button>
+      </div>
+
+      <table class="ranking-table">
+        <thead><tr><th>順位</th><th>なまえ</th><th>スコア</th></tr></thead>
+        <tbody id="ranking-table-body">
+          <tr><td colspan="3">条件を選んでください</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button id="btn-ranking-back" class="btn btn-ghost">← もどる</button>
+  </div>
+</div>
+
+<script src="js/rewards.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/ranking.js"></script>
+<script src="js/game.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/page-ranking.js"></script>
+
+</body>
+</html>
