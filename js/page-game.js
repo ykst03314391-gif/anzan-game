@@ -1,5 +1,7 @@
 'use strict';
 
+const ASSET_VER = '20260526';
+
 const config = JSON.parse(localStorage.getItem('anzan_pending_game') || 'null');
 
 let _gs = null;
@@ -10,7 +12,7 @@ function setCharaState(state) {
   const charaId = user ? user.charaId : 'kirby';
   const img     = document.getElementById('game-chara-img');
   const fb      = document.getElementById('game-chara-fallback');
-  img.src = `images/chara/${charaId}/${state}.png`;
+  img.src = `images/chara/${charaId}/${state}.png?v=${ASSET_VER}`;
   img.onerror = () => {
     img.style.display = 'none';
     const ch = CHAR_LIST.find(c => c.id === charaId);
@@ -185,7 +187,19 @@ function _showResult() {
   document.getElementById('result-correct-count').textContent =
     `正解 ${_gs.correct} / ${_gs.answered} もん`;
 
-  playBgm('result_clear');
+  playSe('clear', 'm4a');
+
+  // 結果キャラ画像（happy）
+  const user    = getCurrentUser();
+  const charaId = user ? user.charaId : 'kirby';
+  const rImg = document.getElementById('result-chara-img');
+  const rFb  = document.getElementById('result-chara-fallback');
+  rImg.src = `images/chara/${charaId}/happy.png?v=${ASSET_VER}`;
+  rImg.onerror = () => { rImg.style.display = 'none'; rFb.style.display = ''; };
+  rImg.onload  = () => { rImg.style.display = '';     rFb.style.display = 'none'; };
+  const ch = CHAR_LIST.find(c => c.id === charaId);
+  rFb.textContent = ch ? ch.emoji : '⭐';
+
   _checkRewards();
 
   // ランキング登録判定

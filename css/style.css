@@ -369,6 +369,16 @@ html, body {
   margin-bottom: 10px;
 }
 
+.result-chara-area {
+  width: 110px;
+  height: 110px;
+  margin: 10px auto 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.result-chara-area img { width: 100%; height: 100%; object-fit: contain; }
+
 .result-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .result-btn-row .btn { flex: 1; min-width: 100px; }
 

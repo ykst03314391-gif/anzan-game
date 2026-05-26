@@ -7,11 +7,11 @@ function getAudioCtx() {
 }
 
 const _seCache = {};
-async function playSe(name) {
+async function playSe(name, ext = 'mp3') {
   try {
     const ctx = getAudioCtx();
     if (ctx.state === 'suspended') await ctx.resume();
-    const path = `sounds/se/${name}.mp3`;
+    const path = `sounds/se/${name}.${ext}`;
     if (!_seCache[path]) {
       const res = await fetch(path);
       if (!res.ok) return;
