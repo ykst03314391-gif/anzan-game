@@ -361,18 +361,13 @@ html, body {
 .result-score .value { font-size: 3rem; font-weight: bold; }
 .result-correct { font-size: 0.95rem; opacity: 0.9; margin-top: 4px; }
 
-.rank-in-msg { color: var(--pink); font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
-.rank-registered { color: var(--green); font-weight: bold; }
-.rank-input-row { display: flex; gap: 8px; }
-.rank-input-row input {
-  flex: 1;
-  padding: 10px 14px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  font-family: var(--font);
+.rank-in-msg      { color: var(--pink);  font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; }
+.rank-registered  { color: var(--green); font-weight: bold; }
+.result-ranking-title {
   font-size: 1rem;
+  color: var(--pink);
+  margin-bottom: 10px;
 }
-.rank-input-row input:focus { outline: none; border-color: var(--pink); }
 
 .result-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .result-btn-row .btn { flex: 1; min-width: 100px; }

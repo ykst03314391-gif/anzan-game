@@ -141,6 +141,31 @@ function _endGame() {
   setTimeout(_showResult, 400);
 }
 
+// ---- ランキングテーブル描画（結果画面用） ----
+function _renderResultRanking() {
+  const mode = config.mode;
+  const list = getTopRanking(config.calcTypeId, mode, config.countOrTime);
+  const pct  = e => e.answered > 0 ? Math.round(e.correct / e.answered * 100) + '%' : '0%';
+
+  if (mode === 'count') {
+    document.getElementById('result-ranking-thead').innerHTML =
+      '<th>順位</th><th>正答率</th><th>タイム</th><th>日付</th>';
+  } else {
+    document.getElementById('result-ranking-thead').innerHTML =
+      '<th>順位</th><th>正解数</th><th>正答率</th><th>日付</th>';
+  }
+
+  document.getElementById('result-ranking-body').innerHTML = list.length
+    ? list.map((e, i) => {
+        if (mode === 'count') {
+          return `<tr><td>${i+1}位</td><td>${e.correct}/${e.answered}</td><td>${_fmt(e.elapsed)}</td><td>${e.date}</td></tr>`;
+        } else {
+          return `<tr><td>${i+1}位</td><td>${e.correct}もん</td><td>${pct(e)}</td><td>${e.date}</td></tr>`;
+        }
+      }).join('')
+    : `<tr><td colspan="4">まだ記録がありません</td></tr>`;
+}
+
 // ---- 結果 ----
 function _showResult() {
   document.getElementById('section-game').classList.add('hidden');
@@ -163,19 +188,21 @@ function _showResult() {
   playBgm('result_clear');
   _checkRewards();
 
-  // ランキング
-  const rankSection = document.getElementById('result-rank-section');
-  rankSection.innerHTML = '';
+  // ランキング登録判定
+  const notify = document.getElementById('result-rank-notify');
+  notify.innerHTML = '';
   if (checkRankIn(config.calcTypeId, mode, config.countOrTime, _gs.correct, _gs.answered, _gs.elapsed)) {
-    rankSection.innerHTML = `<p class="rank-in-msg">🎉 ランキング入り！</p>
-      <button id="btn-register-rank" class="btn btn-primary">登録</button>`;
+    notify.innerHTML = `<p class="rank-in-msg">🎉 ランキング入り！</p>
+      <button id="btn-register-rank" class="btn btn-primary" style="margin-bottom:12px;">登録</button>`;
     document.getElementById('btn-register-rank').addEventListener('click', () => {
       addRankingEntry(config.calcTypeId, mode, config.countOrTime, _gs.correct, _gs.answered, _gs.elapsed);
       playSe('ranking');
-      rankSection.innerHTML = `<p class="rank-registered">✅ 登録しました！</p>`;
+      notify.innerHTML = `<p class="rank-registered" style="margin-bottom:8px;">✅ 登録しました！</p>`;
       _checkAndGrantBadge('ranking_entry');
+      _renderResultRanking();
     }, { once: true });
   }
+  _renderResultRanking();
 }
 
 // ---- ご褒美 ----
@@ -335,8 +362,5 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('btn-result-retry').addEventListener('click', () => {
     window.location.href = 'game.html';
-  });
-  document.getElementById('btn-result-ranking').addEventListener('click', () => {
-    window.location.href = 'ranking.html';
   });
 });
