@@ -147,9 +147,8 @@ function _showResult() {
   document.getElementById('section-game').classList.add('hidden');
   document.getElementById('section-result').classList.remove('hidden');
 
-  const ct    = getCalcType(config.calcTypeId);
-  const mode  = config.mode;
-  const score = mode === 'count' ? _gs.elapsed : _gs.correct;
+  const ct   = getCalcType(config.calcTypeId);
+  const mode = config.mode;
 
   document.getElementById('result-calc-label').textContent = ct.label;
   if (mode === 'count') {
@@ -163,22 +162,16 @@ function _showResult() {
     `正解 ${_gs.correct} / ${_gs.answered} もん`;
 
   playBgm('result_clear');
-  _checkRewards(score);
+  _checkRewards();
 
   // ランキング
   const rankSection = document.getElementById('result-rank-section');
   rankSection.innerHTML = '';
-  if (checkRankIn(config.calcTypeId, mode, config.countOrTime, score)) {
+  if (checkRankIn(config.calcTypeId, mode, config.countOrTime, _gs.correct, _gs.answered, _gs.elapsed)) {
     rankSection.innerHTML = `<p class="rank-in-msg">🎉 ランキング入り！</p>
-      <div class="rank-input-row">
-        <input id="rank-name-input" type="text" placeholder="なまえを入力" maxlength="10">
-        <button id="btn-register-rank" class="btn btn-primary">登録</button>
-      </div>`;
-    const user = getCurrentUser();
-    if (user) document.getElementById('rank-name-input').value = user.name;
+      <button id="btn-register-rank" class="btn btn-primary">登録</button>`;
     document.getElementById('btn-register-rank').addEventListener('click', () => {
-      const name = document.getElementById('rank-name-input').value.trim() || '名なし';
-      addRankingEntry(config.calcTypeId, mode, config.countOrTime, name, score);
+      addRankingEntry(config.calcTypeId, mode, config.countOrTime, _gs.correct, _gs.answered, _gs.elapsed);
       playSe('ranking');
       rankSection.innerHTML = `<p class="rank-registered">✅ 登録しました！</p>`;
       _checkAndGrantBadge('ranking_entry');
@@ -206,7 +199,7 @@ function _checkAndGrantBadge(badgeId) {
   _showToast(`${badge.icon} バッジ獲得：${badge.label}`);
 }
 
-function _checkRewards(score) {
+function _checkRewards() {
   const user = getCurrentUser();
   if (!user) return;
   const updated = addCorrectCount(user.id, _gs.correct);

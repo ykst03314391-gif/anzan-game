@@ -11,28 +11,48 @@ function _rankKey(calcId, mode, countOrTime) {
   return `${calcId}__${mode}__${countOrTime}`;
 }
 
-function getTopRanking(calcId, mode, countOrTime) {
-  return (loadRankings()[_rankKey(calcId, mode, countOrTime)] || []).slice(0, 10);
+function _rate(e) { return e.answered > 0 ? e.correct / e.answered : 0; }
+
+// count: 正答率 降順 → 同率ならタイム 昇順
+// time:  正解数 降順 → 同数なら正答率 降順
+function _sortEntries(list, mode) {
+  if (mode === 'count') {
+    list.sort((a, b) => {
+      const diff = _rate(b) - _rate(a);
+      return diff !== 0 ? diff : a.elapsed - b.elapsed;
+    });
+  } else {
+    list.sort((a, b) => {
+      if (a.correct !== b.correct) return b.correct - a.correct;
+      return _rate(b) - _rate(a);
+    });
+  }
+  return list;
 }
 
-// score: mode='count' → 秒数（低いほど良い）, mode='time' → 正解数（高いほど良い）
-function checkRankIn(calcId, mode, countOrTime, score) {
+function getTopRanking(calcId, mode, countOrTime) {
+  return (loadRankings()[_rankKey(calcId, mode, countOrTime)] || [])
+    .filter(e => e.correct !== undefined)
+    .slice(0, 10);
+}
+
+function checkRankIn(calcId, mode, countOrTime, correct, answered, elapsed) {
   const list = getTopRanking(calcId, mode, countOrTime);
   if (list.length < 10) return true;
-  const worst = list[list.length - 1].score;
-  return mode === 'count' ? score < worst : score > worst;
+  const candidate = { correct, answered, elapsed };
+  const testList = [...list, candidate];
+  _sortEntries(testList, mode);
+  return testList.indexOf(candidate) < 10;
 }
 
-function addRankingEntry(calcId, mode, countOrTime, name, score) {
+function addRankingEntry(calcId, mode, countOrTime, correct, answered, elapsed) {
   const rankings = loadRankings();
   const key = _rankKey(calcId, mode, countOrTime);
   const list = rankings[key] || [];
-  const entry = { name, score, date: new Date().toLocaleDateString('ja-JP') };
-  list.push(entry);
-  list.sort((a, b) => mode === 'count' ? a.score - b.score : b.score - a.score);
+  list.push({ correct, answered, elapsed, date: new Date().toLocaleDateString('ja-JP') });
+  _sortEntries(list, mode);
   rankings[key] = list.slice(0, 10);
   saveRankings(rankings);
-  return rankings[key].findIndex(e => e === rankings[key].find(x => x.name === name && x.score === score && x.date === entry.date)) + 1;
 }
 
 function resetAllRankings() {

@@ -45,20 +45,46 @@ function renderRankingTable() {
   document.getElementById('rank-count-options').classList.toggle('hidden', activeMode !== 'count');
   document.getElementById('rank-time-options').classList.toggle('hidden',  activeMode !== 'time');
 
+  // 列ヘッダーをモードに合わせて更新
+  const thead = document.querySelector('.ranking-table thead tr');
+  if (activeMode === 'count') {
+    thead.innerHTML = '<th>順位</th><th>正答率</th><th>タイム</th><th>日付</th>';
+  } else {
+    thead.innerHTML = '<th>順位</th><th>正解数</th><th>正答率</th><th>日付</th>';
+  }
+
+  const colspan = 4;
   if (!countOrTime) {
     document.getElementById('ranking-table-body').innerHTML =
-      '<tr><td colspan="3">問題数か時間を選んでください</td></tr>';
+      `<tr><td colspan="${colspan}">もんだいすうか時間を選んでください</td></tr>`;
     return;
   }
+
   const list = getTopRanking(calcId, activeMode, countOrTime);
   if (!list.length) {
-    document.getElementById('ranking-table-body').innerHTML = '<tr><td colspan="3">記録なし</td></tr>';
+    document.getElementById('ranking-table-body').innerHTML =
+      `<tr><td colspan="${colspan}">記録なし</td></tr>`;
     return;
   }
+
+  const _fmt = s => `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
+  const _pct = e => e.answered > 0 ? Math.round(e.correct / e.answered * 100) + '%' : '0%';
+
   document.getElementById('ranking-table-body').innerHTML = list.map((e, i) => {
-    const score = activeMode === 'count'
-      ? `${Math.floor(e.score/60).toString().padStart(2,'0')}:${(e.score%60).toString().padStart(2,'0')}`
-      : `${e.score}もん`;
-    return `<tr><td>${i+1}位</td><td>${e.name}</td><td>${score}</td></tr>`;
+    if (activeMode === 'count') {
+      return `<tr>
+        <td>${i+1}位</td>
+        <td>${e.correct}/${e.answered}</td>
+        <td>${_fmt(e.elapsed)}</td>
+        <td>${e.date}</td>
+      </tr>`;
+    } else {
+      return `<tr>
+        <td>${i+1}位</td>
+        <td>${e.correct}もん</td>
+        <td>${_pct(e)}</td>
+        <td>${e.date}</td>
+      </tr>`;
+    }
   }).join('');
 }
