@@ -54,7 +54,7 @@ function updateUser(id, fields) {
 
 function deleteUser(id) {
   saveUsers(loadUsers().filter(u => u.id !== id));
-  localStorage.removeItem(`anzan_mission_${id}`);
+  localStorage.removeItem(`anzan_missions_${id}`);
   if (getCurrentUserId() === id) setCurrentUserId(null);
 }
 
@@ -77,12 +77,26 @@ const MISSIONS = [
   { id: 'div_clear',  label: '割り算をクリア',                 type: 'calc_clear',    group: 'div' },
   { id: 'rand_clear', label: 'ランダムをクリア',               type: 'calc_clear',    group: 'rand' },
   { id: 'any_10',     label: 'なんでもいいから10回クリア',     type: 'total_clears',  goal: 10 },
-  { id: 'count_3',    label: 'もんだいかずモードを3回クリア', type: 'mode_clears',   mode: 'count', goal: 3 },
+  { id: 'count_3',    label: 'もんだいすうモードを3回クリア', type: 'mode_clears',   mode: 'count', goal: 3 },
   { id: 'time_3',     label: 'せいげん時間モードを3回クリア', type: 'mode_clears',   mode: 'time',  goal: 3 },
 ];
 
+function _todayStr() {
+  return new Date().toLocaleDateString('ja-JP');
+}
+
 function loadMissionData(userId) {
-  try { return JSON.parse(localStorage.getItem(`anzan_missions_${userId}`)) || {}; } catch { return {}; }
+  try {
+    const data = JSON.parse(localStorage.getItem(`anzan_missions_${userId}`)) || {};
+    if (data._date !== _todayStr()) {
+      const reset = { _date: _todayStr() };
+      saveMissionData(userId, reset);
+      return reset;
+    }
+    return data;
+  } catch {
+    return { _date: _todayStr() };
+  }
 }
 function saveMissionData(userId, data) {
   localStorage.setItem(`anzan_missions_${userId}`, JSON.stringify(data));
@@ -90,13 +104,12 @@ function saveMissionData(userId, data) {
 
 function getMissionProgress(userId) {
   const data = loadMissionData(userId);
-  const user = loadUsers().find(u => u.id === userId);
   return MISSIONS.map(m => {
     const state = data[m.id] || { progress: 0, achieved: false };
     let progress = state.progress;
     if (!state.achieved) {
-      if (m.type === 'total_correct' && user)
-        progress = Math.min(m.goal, user.totalCorrect || 0);
+      if (m.type === 'total_correct')
+        progress = Math.min(m.goal, data._dailyCorrect || 0);
       else if (m.type === 'total_clears')
         progress = Math.min(m.goal, data._clears || 0);
       else if (m.type === 'mode_clears')
@@ -106,21 +119,21 @@ function getMissionProgress(userId) {
   });
 }
 
-function updateMissionsAfterGame(userId, { calcTypeId, mode, totalCorrect }) {
+function updateMissionsAfterGame(userId, { calcTypeId, mode, gameCorrect }) {
   const data = loadMissionData(userId);
   const calcGroup = calcTypeId.split('_')[0];
   const newlyAchieved = [];
 
-  data._clears = (data._clears || 0) + 1;
-  const modeKey = `_${mode}_clears`;
-  data[modeKey] = (data[modeKey] || 0) + 1;
+  data._dailyCorrect = (data._dailyCorrect || 0) + gameCorrect;
+  data._clears        = (data._clears || 0) + 1;
+  data[`_${mode}_clears`] = (data[`_${mode}_clears`] || 0) + 1;
 
   MISSIONS.forEach(m => {
     const state = data[m.id] || { progress: 0, achieved: false };
     if (state.achieved) { data[m.id] = state; return; }
 
     if (m.type === 'total_correct') {
-      state.progress = Math.min(m.goal, totalCorrect);
+      state.progress = Math.min(m.goal, data._dailyCorrect);
       if (state.progress >= m.goal) { state.achieved = true; newlyAchieved.push(m.id); }
     } else if (m.type === 'calc_clear') {
       if (calcGroup === m.group) {

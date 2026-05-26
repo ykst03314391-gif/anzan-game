@@ -10,6 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function renderMissionScreen() {
+  const now   = new Date();
+  const reset = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const hh    = String(reset.getHours()).padStart(2, '0');
+  const mm    = String(reset.getMinutes()).padStart(2, '0');
+  const mm2   = String(reset.getMonth() + 1).padStart(2, '0');
+  const dd    = String(reset.getDate()).padStart(2, '0');
+  document.getElementById('mission-reset-info').textContent =
+    `🔄 ${mm2}/${dd} ${hh}:${mm} にリセットされます`;
+
   const user = getCurrentUser();
   const missions = user
     ? getMissionProgress(user.id)

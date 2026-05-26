@@ -206,9 +206,9 @@ function _checkRewards() {
 
   // ミッション
   const newlyAchieved = updateMissionsAfterGame(user.id, {
-    calcTypeId: config.calcTypeId,
-    mode: config.mode,
-    totalCorrect: updated.totalCorrect,
+    calcTypeId:  config.calcTypeId,
+    mode:        config.mode,
+    gameCorrect: _gs.correct,
   });
   if (newlyAchieved.length > 0) {
     playSe('mission');
