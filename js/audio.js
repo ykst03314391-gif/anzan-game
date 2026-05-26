@@ -8,10 +8,15 @@ function getAudioCtx() {
 
 const _seCache = {};
 async function playSe(name, ext = 'mp3') {
+  const path = `sounds/se/${name}.${ext}`;
+  if (ext !== 'mp3') {
+    // mp3 以外は HTML5 Audio で再生（decodeAudioData のフォーマット依存を回避）
+    try { await new Audio(path).play(); } catch {}
+    return;
+  }
   try {
     const ctx = getAudioCtx();
     if (ctx.state === 'suspended') await ctx.resume();
-    const path = `sounds/se/${name}.${ext}`;
     if (!_seCache[path]) {
       const res = await fetch(path);
       if (!res.ok) return;
