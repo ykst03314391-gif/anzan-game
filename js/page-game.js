@@ -125,9 +125,8 @@ function _showFeedback(correct, q) {
     el.textContent = `❌ こたえは ${ans}`;
     el.className = 'feedback wrong';
   }
-  el.classList.remove('hidden');
   setTimeout(() => {
-    el.classList.add('hidden');
+    el.className = 'feedback';
     if (!_gs.finished) _nextQuestion();
   }, 900);
 }
