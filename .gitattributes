@@ -1,0 +1,18 @@
+# デフォルトはGitに自動判定させる
+* text=auto
+
+# Linux上のCIで実行するシェルスクリプトは必ずLFにする
+android/gradlew text eol=lf
+*.sh text eol=lf
+
+# Windows用バッチはCRLF
+*.bat text eol=crlf
+
+# バイナリ（改行変換しない）
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.mp3 binary
+*.m4a binary
+*.wav binary
+*.jar binary

@@ -1,0 +1,19 @@
+{
+  "name": "anzan-game",
+  "version": "1.0.0",
+  "description": "小学生向け算数暗算ゲーム（Androidアプリ）",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:www": "node scripts/build-www.mjs",
+    "sync": "npm run build:www && cap sync android",
+    "add:android": "npm run build:www && cap add android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  }
+}

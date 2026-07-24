@@ -1,0 +1,17 @@
+# Node
+node_modules/
+
+# Capacitor で生成する Web バンドル（ビルド時に scripts/build-www.mjs が再生成）
+www/
+
+# Android ビルド成果物
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/app/release/
+android/capacitor-cordova-android-plugins/
+
+# OS / エディタ
+.DS_Store
+Thumbs.db

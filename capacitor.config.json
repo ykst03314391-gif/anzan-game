@@ -1,0 +1,8 @@
+{
+  "appId": "com.anzan.game",
+  "appName": "算数暗算ゲーム",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": true
+  }
+}
